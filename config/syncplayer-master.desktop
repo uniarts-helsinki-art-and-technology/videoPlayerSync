@@ -1,0 +1,5 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=lxterminal -e "/home/pi/Desktop/playVideo_sync.sh --master"
+Name=Sync-player master
