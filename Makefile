@@ -1,5 +1,5 @@
-asennuspolku = ~/Desktop/
-configpolku = ~/.config/autostart/
+asennuspolku = /home/pi/Desktop/
+configpolku = /home/pi/.config/autostart/
 
 src = playVideo_sync.sh
 config_master = syncplayer-master.desktop
