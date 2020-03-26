@@ -7,9 +7,6 @@ Tämä on skripti, joka siirtää tiedoston USB-asemalta Raspberry Pi:n muistiko
 
 # Asennus
 
-## Asenna omxplayer-sync
-[https://github.com/turingmachine/omxplayer-sync](https://github.com/turingmachine/omxplayer-sync)
-
 ## Pystytä verkko
 Masterin pitää pystyä lähettämään broadcastilla käskyjä slavelle.
 
@@ -19,18 +16,28 @@ Jos halutaan käyttää wifiä, on tehtävä masterille access point ja slaven o
 * [Access pointin luominen Raspberry Pi:llä](https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md)
 * [create_ap](https://github.com/oblique/create_ap): skripti access pointin pystyttämiseen
 
+## Asenna riippuvuudet
+
+Esim. aptilla pääkäyttäjän oikeuksin:
+
+	apt install libpcre3 fonts-freefont-ttf fbset libssh-4 python3-dbus omxplayer
+
 ## Asenna skripti
 
-Lataa ja mene kansioon videoPlayerSync-master
+Lataa ja mene kansioon videoPlayerSync-master.
+Asenna pääkäyttäjän oikeuksin:
 
 Asenna master:
-	$ make master
+
+	make master
 
 Asenna slave:
-	$ make
+
+	make
 
 Poistaaksesi asennuksen:
-	$ make uninstall
+
+	make uninstall
 
 
 # Käyttö
@@ -86,9 +93,6 @@ This script copies a video file from USB drive and runs [omxplayer-sync](https:/
 
 # How to install
 
-## Install omxplayer-sync
-[https://github.com/turingmachine/omxplayer-sync](https://github.com/turingmachine/omxplayer-sync)
-
 ## Set up network 
 The master needs to broadcast messages to the slaves
 
@@ -99,18 +103,28 @@ If wifi is required, set up an access point on the master and connect to it on t
 * [create_ap](https://github.com/oblique/create_ap): a script to create the access point
 
 
+## Install dependencies
+
+Eg. using apt with root permissions:
+
+	apt install libpcre3 fonts-freefont-ttf fbset libssh-4 python3-dbus omxplayer
+
 ## Install the script
 
-Download and go to the videoPlayerSync-master folder
+Dowload and go to the videoPlayerSync-master folder
+Install with root permissions:
 
-Install on master:
-	$ make master
+To install master:
 
-Install on slave:
-	$ make slave
+	make master
 
-To remove installation:
-	$ make uninstall
+To install slave:
+
+	make
+
+To uninstall:
+
+	make uninstall
 
 
 # How to use
