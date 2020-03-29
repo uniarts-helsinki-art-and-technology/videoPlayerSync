@@ -4,8 +4,13 @@ import os
 DEFAULT_MEDIA_PATH = "/media/pi/"
 
 
-def addQuotes(path):
-	return "\"" + path + "\""
+# Selvitä polku ja lisää lainausmerkit
+# Clean the path and add quotes
+def cleanPath(path):
+	path = path.strip('\"')
+	path = os.path.abspath(path)
+	path = "\"" + path + "\""
+	return path
 
 
 # Palauta True jos annettu tiedosto on kansio tai piilotiedosto.
@@ -48,16 +53,16 @@ class mediaLoader:
 		try:
 			mediaList = os.listdir(self.mediaMountPath)
 		except:
-			print "Ei voitu lukea: " + addQuotes(self.mediaMountPath)
-			print "Could not read: " + addQuotes(self.mediaMountPath)
+			print "Ei voitu lukea: " + cleanPath(self.mediaMountPath)
+			print "Could not read: " + cleanPath(self.mediaMountPath)
 			return ""
 		
 		for media in mediaList:
 			path = self.mediaMountPath + media + "/"
 			try:
 				if os.path.isdir(path) == False:
-					print addQuotes(path) + " ei ole kansio"
-					print addQuotes(path) + " is not a directory"
+					print cleanPath(path) + " ei ole kansio"
+					print cleanPath(path) + " is not a directory"
 					continue
 				files = os.listdir(path)
 			except:
@@ -82,18 +87,23 @@ class mediaLoader:
 			return False
 		
 		print 	"Kopioidaan " \
-				+ addQuotes(filenameFromMedia) \
-				+ " -> " + addQuotes(dstFilename) 
+				+ cleanPath(filenameFromMedia) \
+				+ " -> " + cleanPath(dstFilename) 
 			
 		print 	"Copying " \
-				+ addQuotes(filenameFromMedia) \
-				+ " -> " + addQuotes(dstFilename) 
+				+ cleanPath(filenameFromMedia) \
+				+ " -> " + cleanPath(dstFilename) 
 		
 		try:
 			cpCommand = "cp " \
-						+ addQuotes(filenameFromMedia) \
-						+ " " + addQuotes(dstFilename) 
+						+ cleanPath(filenameFromMedia) \
+						+ " " + cleanPath(dstFilename) 
 					
+			# varmista että kansio on olemassa
+			# make sure the directory exists
+			mkdirCommand = "mkdir -p " + cleanPath(os.path.dirname(dstFilename))
+			print mkdirCommand
+			os.system(mkdirCommand)
 			os.system(cpCommand)
 			
 		except:
@@ -108,7 +118,7 @@ class mediaLoader:
 		if self.pathToUnmount == "":
 			return
 		try:
-			os.system("umount " + addQuotes(self.pathToUnmount) )
+			os.system("umount " + cleanPath(self.pathToUnmount) )
 		except:
 			print "Ei voitu irrottaa: " + self.pathToUnmount
 			print "Could not unmount: " + self.pathToUnmount

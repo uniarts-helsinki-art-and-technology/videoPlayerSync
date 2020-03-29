@@ -11,8 +11,13 @@ broadcastAddress = "192.168.4.255"
 maxTries = 10
 
 
-def addQuotes(path):
-	return "\"" + path + "\""
+# Selvitä polku ja lisää lainausmerkit
+# Clean the path and add quotes
+def cleanPath(path):
+	path = path.strip('\"')
+	path = os.path.abspath(path)
+	path = "\"" + path + "\""
+	return path
 
 
 def masterOrSlave():
@@ -37,8 +42,8 @@ print "mode: " + mode
 
 USB = mediaLoader()
 USB.setMediaMountPath(mediaPath)
-print "Haetaan tiedostoa USB-medialta polusta " + addQuotes(mediaPath)
-print "Searching for file from USB media in path " + addQuotes(mediaPath)
+print "Haetaan tiedostoa USB-medialta polusta " + cleanPath(mediaPath)
+print "Searching for file from USB media in path " + cleanPath(mediaPath)
 fileWasCopied = USB.copyFromMediaToFile(localFile)
 
 while True:
@@ -54,25 +59,32 @@ while True:
 		print "Tiedosto kopioitiin"
 		print "File was copied"
 		USB.unmount()
-		# Viive on sitä varten että ehtii lukea tekstipäätteen
+		# Viive on sitä varten että käyttäjä ehtii lukea tekstipäätteen
 		# Sleep so that the user has time to read the text terminal
 		time.sleep(5)
 	else:
-		print "Ei löydetty tiedostoa USB-medialta polussa " + addQuotes(mediaPath)
-		print "No file found on USB media in path " + addQuotes(mediaPath)
+		print "Ei löydetty tiedostoa USB-medialta polussa " + cleanPath(mediaPath)
+		print "No file found on USB media in path " + cleanPath(mediaPath)
 
-	print "Toistetaan " + addQuotes(localFile) + "..."
-	print "Playing " + addQuotes(localFile) + "..."
+	print "Toistetaan " + cleanPath(localFile) + "..."
+	print "Playing " + cleanPath(localFile) + "..."
 
 	if os.path.isfile(localFile):
 		if mode == "master":
 			args = "-mu -x " + broadcastAddress
 		else:
 			args = "-lu"
-		command = "omxplayer-sync " + args + " " + addQuotes(localFile)
-		os.system(command)
-		exit(0)
+		command = "omxplayer-sync " + args + " " + cleanPath(localFile)
+		
+		#Jos omxplayer-sync sulkeutuu, käynnistetään se heti uudestaan
+		while True:
+			os.system(command)
+			print "Toisto keskeytyi. Toistetaan uudelleen..."
+			print "Playback interrupted. Playing again..."
+			time.sleep(1)
+			
+		exit(1)
 	else:
-		print "Tiedostoa " + addQuotes(localFile) + " ei ole."
-		print "File " + addQuotes(localFile) + " does not exist."
+		print "Tiedostoa " + cleanPath(localFile) + " ei ole."
+		print "File " + cleanPath(localFile) + " does not exist."
 		time.sleep(1)
