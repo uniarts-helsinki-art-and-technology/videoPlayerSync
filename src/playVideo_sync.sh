@@ -7,7 +7,7 @@ import sys
 
 mediaPath = "/media/pi/"
 localFile = "/home/pi/Desktop/videot/video"
-broadcastAddress = "192.168.4.255"
+broadcastAddress = "255.255.255.255"
 maxTries = 10
 
 
