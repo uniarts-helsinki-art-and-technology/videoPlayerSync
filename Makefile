@@ -27,6 +27,7 @@ master: omxplayer_sync
 
 slave: omxplayer_sync
 	rm -f $(autostartPath)$(autostartMaster)
+	mkdir -p $(autostartPath)
 	cp $(autostartSrcPath)$(autostartSlave) $(autostartPath)
 	mkdir -p $(installationPath)
 	cp $(srcPath)* $(installationPath)
