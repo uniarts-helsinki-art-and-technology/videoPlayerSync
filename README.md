@@ -33,7 +33,7 @@ Asenna master:
 
 Asenna slave:
 
-	make
+	make slave
 
 Poistaaksesi asennuksen:
 
