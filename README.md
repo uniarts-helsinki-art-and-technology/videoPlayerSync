@@ -111,7 +111,7 @@ Eg. using apt with root permissions:
 
 ## Install the script
 
-Dowload and go to the videoPlayerSync-master folder
+Download and go to the videoPlayerSync-master folder
 Install with root permissions:
 
 To install master:
@@ -120,7 +120,7 @@ To install master:
 
 To install slave:
 
-	make
+	make slave
 
 To uninstall:
 
